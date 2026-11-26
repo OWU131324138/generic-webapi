@@ -1,44 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アプリ一覧</title>
-    <style>
-        body { font-family: sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; color: #333; }
-        h1 { font-size: 1.4rem; }
-        ul { list-style: none; padding: 0; }
-        li { padding: 12px 0; border-bottom: 1px solid #eee; }
-        a { font-size: 1.1rem; text-decoration: none; color: #0366d6; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <meta name="description" content="メールやSNS投稿など、用途に合わせた文章をAIが3案提案します。">
+  <title>AI文章作成メーカー｜ことばを、さっと形に</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
 </head>
 <body>
-    <h1>アプリ一覧</h1>
-    <ul id="appList"></ul>
-
-    <script>
-        // サーバーから .html ファイルの一覧を取得してリンクを表示する
-        async function loadPages() {
-            const response = await fetch('/api/pages');
-            const files = await response.json();
-
-            const list = document.getElementById('appList');
-            if (files.length === 0) {
-                list.innerHTML = '<li>public/ に .html ファイルがありません。</li>';
-                return;
-            }
-
-            files.forEach(name => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = name;
-                a.textContent = name;
-                li.appendChild(a);
-                list.appendChild(li);
-            });
-        }
-
-        loadPages();
-    </script>
+  <div class="site-shell">
+    <header class="topbar">
+      <button class="brand" data-view="home" aria-label="ホームへ">
+        <span class="brand-icon" aria-hidden="true">✍️</span>
+        <span><strong>AI文章作成メーカー</strong><small>ことばを、さっと形に</small></span>
+      </button>
+      <nav class="main-nav" aria-label="メインメニュー">
+        <button data-view="create" class="nav-link">✏️ 作る</button>
+        <button data-view="favorites" class="nav-link">♡ お気に入り</button>
+        <button data-view="history" class="nav-link">◷ 作成履歴</button>
+      </nav>
+    </header>
+    <main id="viewRoot" class="main-content" tabindex="-1"></main>
+    <footer class="site-footer">
+      <span>🫧 伝えたいことを、読みやすい文章に。</span>
+      <span>作った文章はこのブラウザに保存できます。</span>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
